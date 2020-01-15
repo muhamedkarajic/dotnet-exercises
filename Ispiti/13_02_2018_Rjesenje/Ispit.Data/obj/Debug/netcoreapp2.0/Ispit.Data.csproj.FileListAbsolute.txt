@@ -1,0 +1,8 @@
+C:\Users\HP\Documents\FIT\V\RS1\Ispitni\rs1-2017-18-master\uradio\13_02_2018_PocetniProjekt\Ispit.Data\bin\Debug\netcoreapp2.0\Ispit.Data.deps.json
+C:\Users\HP\Documents\FIT\V\RS1\Ispitni\rs1-2017-18-master\uradio\13_02_2018_PocetniProjekt\Ispit.Data\bin\Debug\netcoreapp2.0\Ispit.Data.dll
+C:\Users\HP\Documents\FIT\V\RS1\Ispitni\rs1-2017-18-master\uradio\13_02_2018_PocetniProjekt\Ispit.Data\bin\Debug\netcoreapp2.0\Ispit.Data.pdb
+C:\Users\HP\Documents\FIT\V\RS1\Ispitni\rs1-2017-18-master\uradio\13_02_2018_PocetniProjekt\Ispit.Data\obj\Debug\netcoreapp2.0\Ispit.Data.csprojAssemblyReference.cache
+C:\Users\HP\Documents\FIT\V\RS1\Ispitni\rs1-2017-18-master\uradio\13_02_2018_PocetniProjekt\Ispit.Data\obj\Debug\netcoreapp2.0\Ispit.Data.AssemblyInfoInputs.cache
+C:\Users\HP\Documents\FIT\V\RS1\Ispitni\rs1-2017-18-master\uradio\13_02_2018_PocetniProjekt\Ispit.Data\obj\Debug\netcoreapp2.0\Ispit.Data.AssemblyInfo.cs
+C:\Users\HP\Documents\FIT\V\RS1\Ispitni\rs1-2017-18-master\uradio\13_02_2018_PocetniProjekt\Ispit.Data\obj\Debug\netcoreapp2.0\Ispit.Data.dll
+C:\Users\HP\Documents\FIT\V\RS1\Ispitni\rs1-2017-18-master\uradio\13_02_2018_PocetniProjekt\Ispit.Data\obj\Debug\netcoreapp2.0\Ispit.Data.pdb

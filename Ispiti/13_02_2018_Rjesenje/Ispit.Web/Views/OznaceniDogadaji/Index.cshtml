@@ -1,0 +1,115 @@
+﻿@using Ispit.Web.ViewModels
+@model TabeleDogadjajiViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<br />
+<br />
+@foreach (var notifikacija in Model.Notifikacije)
+{
+    <div class="alert alert-warning" role="alert">
+        <strong>Događaj "@notifikacija.Naziv" - @notifikacija.Datum.</strong> <br />
+        Ovo je podsjetnik za obavezu "@notifikacija.Opis". Označi kao<button class="btn btn-link" onclick="oznaciProcitano(@notifikacija.PoslataNotifikacijaId)">pročitanu.</button>
+    </div>
+}
+
+
+<h2>Neoznačeni događaji</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Datum</th>
+            <th>Nastavnik</th>
+            <th>Opis</th>
+            <th>Broj obaveza</th>
+            <th>Akcija</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var neoznacenDogadjaj in Model.NeoznaceniDogadjaji)
+        {
+            <tr>
+                <td>@neoznacenDogadjaj.DatumDogadjanja</td>
+                <td>@neoznacenDogadjaj.Nastavnik</td>
+                <td>@neoznacenDogadjaj.OpisDogadjaja</td>
+                <td>@neoznacenDogadjaj.BrojObaveza</td>
+                <td>
+                    @if (neoznacenDogadjaj.DatumDogadjanja.CompareTo(DateTime.Now) == -1)
+                    {
+                        <p>Proslo</p>
+                    }
+                    else
+                    {
+                        <a class="btn btn-primary" asp-controller="OznaceniDogadaji" asp-action="DodajDogadjaj" asp-route-dogadjejId="@neoznacenDogadjaj.ID">Dodaj</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<br />
+<hr />
+<br />
+
+<h2>Označeni događaji</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Datum</th>
+            <th>Nastavnik</th>
+            <th>Opis</th>
+            <th>Relizovano obaveza RO</th>
+            <th>Akcija</th>
+    </thead>
+    <tbody>
+        @foreach (var oznacenDogadjaj in Model.OznaceniDogadjaji)
+        {
+            <tr>
+                <td>@oznacenDogadjaj.DatumDogadjanja</td>
+                <td>@oznacenDogadjaj.Nastavnik</td>
+                <td>@oznacenDogadjaj.OpisDogadjaja</td>
+                <td>@oznacenDogadjaj.BrojObaveza</td>
+                <td>
+                    <button class="btn btn-primary" onclick="detaljiDogadjaja(@oznacenDogadjaj.DogadjajID)">Detalji</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div id="detaljiDogadjaja"></div>
+
+<script>
+    var dogadjajIdGlobal = 0;
+    function detaljiDogadjaja(dogadjajId) {
+        dogadjajIdGlobal = dogadjajId;
+        $.ajax({
+            url: '/DetaljiDogadjaja/Index',
+            data: { dogadjajId: dogadjajId },
+            type: 'GET',
+            success: function (data) {
+                $('#detaljiDogadjaja').html(data);
+            },
+            error: function (err) {
+                console.log("error: ", err);
+            }
+        });
+    }
+    function oznaciProcitano(poslataNotifikacijaId) {
+        $.ajax({
+            url: 'Notifikacije/Procitano',
+            data: { poslataNotifikacijaId: poslataNotifikacijaId },
+            type: 'GET',
+            success: function (data) {
+                alert(data);
+            },
+            error: function (error) {
+                console.log(data);
+                alert("Doslo je do greske.");
+            }
+
+        })
+    }
+</script>

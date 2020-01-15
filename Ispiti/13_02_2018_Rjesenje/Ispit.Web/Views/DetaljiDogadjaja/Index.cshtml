@@ -1,0 +1,148 @@
+﻿@using Ispit.Web.ViewModels
+@model DetaljiDogadjajaParentViewModel
+
+@{
+    ViewData["Title"] = "Detalji događaja";
+}
+
+<div id="detaljiDogadjajaChild">
+    <br />
+    <br />
+    <br />
+    <strong>Detalji događaja</strong>
+    <br />
+    <hr />
+    <strong>Podaci o događaju</strong>
+    <br />
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Datum događaja</th>
+                <th>Datum dodavanja</th>
+                <th>Opis događaja</th>
+                <th>Nastavnik</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.DetaljiDogadjaja.DatumOdrzavanja</td>
+                <td>@Model.DetaljiDogadjaja.DatumDodavanja</td>
+                <td>@Model.DetaljiDogadjaja.Opis</td>
+                <td>@Model.DetaljiDogadjaja.Nastavnik</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Neoznačeni događaji</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Naziv</th>
+                <th>Procenat realizacije obaveze</th>
+                <th>Šalji notifikaciju x danaunaprijed</th>
+                <th>Ponavljaj notifikaciju svaki dan do početka događaja</th>
+                <th>Akcija</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var stanjeObaveza in Model.StanjeObaveze)
+            {
+                <tr>
+                    <td>@stanjeObaveza.Naziv</td>
+                    <td>@stanjeObaveza.ProcenatRealizacijeObaveze</td>
+                    <td>@stanjeObaveza.NotifikacijaDanaPrije</td>
+                    <td>@stanjeObaveza.NotifikacijeRekurizivno</td>
+                    <td><button class="btn btn-info" onclick="urediStanjeObaveze(@stanjeObaveza.ID)">Uredi</button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+
+    <table class="table table-striped" id="urediStanjeObaveze" hidden>
+        <thead>
+            <tr>
+                <th>Evidentiranje stanja obaveza</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Obaveza: </td>
+                <td id="nazivStanjaObaveze">0</td>
+            </tr>
+            <tr>
+                <td>Završeno procentualno: </td>
+                <td><input id="procenatStanjaObaveze" type="number" />%</td>
+            </tr>
+            <tr>
+                <td><button onclick="azurirajStanjeObaveze()">Snimi</button></td>
+                <td> </td>
+            </tr>
+        </tbody>
+    </table>
+    <br />
+    <hr />
+    <br />
+</div>
+
+<script>
+
+    var trenutnoStanjeObavezeId = 0;
+    function azurirajStanjeObaveze() {
+        let procenatStanjaObaveze = $('#procenatStanjaObaveze').val();
+        if (procenatStanjaObaveze > 100 || procenatStanjaObaveze < 0) {
+            alert("Procenat stanja obaveze mora biti između 0 i 100!");
+            return;
+        }
+
+        $.ajax({
+            url: '/StanjeObaveze/Azuriraj',
+            data: {
+                stanjeObavezeId: trenutnoStanjeObavezeId,
+                procenatStanjaObaveze: $('#procenatStanjaObaveze').val()
+            },
+            type: 'PUT',
+            success: function (data) {
+                alert("Uspjesno azurirano!");
+                $.ajax({
+                    url: '/DetaljiDogadjaja/Index',
+                    data: { dogadjajId: dogadjajIdGlobal },
+                    type: 'GET',
+                    success: function (data) {
+                        $('#detaljiDogadjajaChild').html(data);
+                    },
+                    error: function (err) {
+                        console.log("error: ", err);
+                    }
+                });
+            },
+            error: function () {
+                console.log('error');
+            }
+        });
+    }
+
+    function urediStanjeObaveze(stanjeObavezeId) {
+        $.ajax({
+            url: '/StanjeObaveze/Index',
+            data: { stanjeObavezeId: stanjeObavezeId },
+            type: 'GET',
+            success: function (data) {
+                trenutnoStanjeObavezeId = stanjeObavezeId;
+                $('#procenatStanjaObaveze').val(data.izvrsenoProcentualno);
+                $('#nazivStanjaObaveze').text(data.naziv);
+                $('#urediStanjeObaveze').toggle();
+            },
+            error: function () {
+                console.log('success');
+            }
+        });
+    }
+
+    $('document').on('ready', function () {
+
+    });
+
+</script>
