@@ -1,0 +1,137 @@
+﻿@using Ispit_2017_09_11_DotnetCore.ViewModels
+@model OdjeljenjeStavkaViewModel
+
+<h2>Detalji odjeljenja</h2>
+
+<style>
+    label
+    {
+        min-width: 120px
+    }
+</style>
+
+<div>
+    <div class="form-group">
+        <label>Školska Godina</label>
+        <input disabled asp-for="SkolskaGodina" />
+    </div>
+    <div class="form-group">
+        <label>Razred</label>
+        <input disabled asp-for="Razred" />
+    </div>
+    <div class="form-group">
+        <label>Oznaka</label>
+        <input disabled asp-for="Oznaka" />
+    </div>
+    <div class="form-group">
+        <label>Razrednik</label>
+        <input disabled asp-for="Razrednik" />
+
+    </div>
+    <div class="form-group">
+        <label>Broj predmeta</label>
+        <input disabled asp-for="BrojPredmeta" />
+    </div>
+    <div class="form-group">
+        <label>Rekonstruisi</label>
+        <button id="btnRekonstruisi" type="button" class="btn btn-warning">Rekonstruisi</button>
+    </div>
+</div>
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Broj u dnevniku</th>
+            <th scope="col">Učenik</th>
+            <th scope="col">Broj zaključenih ocjena (kraj godine)</th>
+            <th scope="col">Akcija</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var odjeljenjeStavka in Model.OdjeljenjaStavke)
+        {
+            <tr>
+                <td>@odjeljenjeStavka.BrojUDnevniku</td>
+                <td>@odjeljenjeStavka.Ucenik</td>
+                <td>@odjeljenjeStavka.BrojZakljucenihOcjena</td>
+                <td>
+                    <button class="btn btn-danger">Obriši</button> |
+                    <button class="btn btn-primary">Uredi</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<button id="btnDodaj" class="btn btn-info">Dodaj</button>
+
+<form id="frmDodajUcenika" asp-controller="DodajUcenika" hidden>
+    <div class="form-group">
+        <label>Ucenik</label>
+        <input type="text" name="Ucenik" />
+    </div>
+    <div class="form-group">
+        <label>Broj predmeta</label>
+        <input type="number" name="BrojUDnevniku" />
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Snimi</button>
+    </div>
+</form>
+
+<script>
+    function obrisiOdjeljenje(odjeljenjeId) {
+        $.ajax({
+            data: { odjeljenjeId: odjeljenjeId },
+            success: function (result) {
+                alert(result);
+            },
+            error: function (result) {
+                alert(result.responseText);
+            }
+        });
+    }
+
+    $('document').ready(function () {
+        $('#btnDodaj').on('click', function () {
+            $('#frmDodajUcenika').toggle();
+        });
+
+
+        $('#btnRekonstruisi').on('click', function () {
+            $.ajax({
+                url: '/OdjeljenjeStavka/Rekonstruisi',
+                type: 'PUT',
+                data: {odjeljenjeId: @Model.Id},
+                success: function(result) {
+                    alert(result);
+                },
+                error: function (result) {
+                    alert(result.responseText);
+                }
+            });
+        });
+
+        $('#frmDodajUcenika').on('submit', function (e) {
+            e.preventDefault();
+            console.log("THIS", $(this).serialize() + '&odjeljenjeId=' + @Model.Id);
+            $.ajax({
+                url: '/OdjeljenjeStavka/DodajUcenika',
+                type: 'POST',
+                data: $(this).serialize() + '&odjeljenjeId=' + @Model.Id,
+                success: function (result) {
+                    console.log("result", result);
+                    alert(result);
+                },
+                error: function (result) {
+                    alert(result.responseText);
+                }
+            });
+        });
+    });
+
+
+
+</script>

@@ -1,0 +1,89 @@
+﻿@using Ispit_2017_09_11_DotnetCore.ViewModels
+
+@model OdjeljenjaViewModel
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Skolska godina</th>
+            <th scope="col">Razred (1 do 4)</th>
+            <th scope="col">Oznaka</th>
+            <th scope="col">Razrednik</th>
+            <th scope="col">Prebačeni u više odjeljenja (razred)</th>
+            <th scope="col">Prosjek ocjena</th>
+            <th scope="col">Najbolji učenik</th>
+            <th scope="col">Akcija</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var row in @Model.OdjeljenjaTabela)
+        {
+            <tr>
+                <td>@row.SkolskaGodina</td>
+                <td>@row.Razred</td>
+                <td>@row.Oznaka</td>
+                <td>@row.Razrednik</td>
+                <td>@row.PrebaceniUViseOdjeljenja</td>
+                <td>@Math.Round(row.ProsjekOcjena, 2)</td>
+                <td>@Math.Round(row.NajboljiUcenik, 2)</td>
+                <td>
+                    <button class="btn btn-info">Detalji</button>
+                    <button class="btn btn-danger" onclick="obrisiOdjeljenje(@row.Id)">Obriši</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<button id="btnDodaj" class="btn btn-success">Dodaj</button>
+
+<form id="novoOdjeljenje" hidden asp-action="DodajOdjeljenje">
+    <h2>Dodaj novo odjeljenje:</h2>
+    <div class="form-group">
+        <label>Školska Godina</label>
+        <input asp-for="NovoOdjeljenje.SkolskaGodina" />
+    </div>
+    <div class="form-group">
+        <label>Razred</label>
+        <input asp-for="NovoOdjeljenje.Razred" />
+    </div>
+    <div class="form-group">
+        <label>Oznaka</label>
+        <input asp-for="NovoOdjeljenje.Oznaka" />
+    </div>
+    <div class="form-group">
+        <label>Razrednik</label>
+        <select asp-for="NovoOdjeljenje.RazrednikId" asp-items="Model.Razrednici"></select>
+    </div>
+    <div class="form-group">
+        <label>Preuzmi niz odjeljenja</label>
+        <select asp-for="NovoOdjeljenje.OdjeljenjeId" asp-items="Model.Odjeljenja"></select>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Snimi</button>
+    </div>
+</form>
+
+<script>
+    function obrisiOdjeljenje(odjeljenjeId) {
+        $.ajax({
+            url: '/Odjeljenje/ObrisiOdjeljenje',
+            type: 'DELETE',
+            data: {odjeljenjeId:odjeljenjeId},
+            success: function (result) {
+                alert(result);
+            },
+            error: function (result) {
+                alert(result.responseText);
+            }
+        });
+    }
+
+    $('document').ready(function () {
+        $('#btnDodaj').on('click', function () {
+            $('#novoOdjeljenje').toggle();
+        });
+    });
+
+
+</script>
