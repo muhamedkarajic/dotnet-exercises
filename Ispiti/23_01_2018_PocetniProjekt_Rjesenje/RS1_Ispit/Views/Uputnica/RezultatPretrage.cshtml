@@ -1,0 +1,48 @@
+﻿@using RS1_Ispit_asp.net_core.ViewModels
+@using RS1.Ispit.Web.Models
+@model RezultatPretrageUrediViewModel
+
+<form id="urediRezultatPretrageForm">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Evidentiranje rezultata</th>
+                <th scope="col"> </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Pretraga: </td>
+                <td>@Model.Pretraga</td>
+            </tr>
+            <tr>
+                <td>Izmjerena vrijednost: </td>
+                <td><input id="vrijednost" asp-for="@Model.Vrijednost" /><span>@Model.MjernaJedinica</span></td>
+            </tr>
+        </tbody>
+    </table>
+    <button class="btn btn-primary" type="submit">Snimi</button>
+</form>
+
+
+<script>
+    $('#urediRezultatPretrageForm').on('submit', function (e) {
+        e.preventDefault();
+
+        $.ajax({
+        type: 'PUT',
+            url: '/Uputnica/RezultatPretrageUpdate',
+            data: {
+            vrijednost: $('#vrijednost').val(),
+                id: @Model.Id
+            },
+            success: function (data) {
+                $('#detaljiUputniceForm').html(data);
+            }
+        })
+
+        console.log($(this));
+    });
+
+
+</script>

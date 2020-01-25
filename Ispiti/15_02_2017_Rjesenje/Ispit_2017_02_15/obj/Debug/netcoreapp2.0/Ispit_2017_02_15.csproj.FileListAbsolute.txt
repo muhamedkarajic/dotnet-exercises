@@ -1,0 +1,14 @@
+C:\Users\HP\Documents\GitHub\Razvoj-Softvera-I\Ispiti\15_02_2017_Rjesenje\Ispit_2017_02_15\bin\Debug\netcoreapp2.0\appsettings.Development.json
+C:\Users\HP\Documents\GitHub\Razvoj-Softvera-I\Ispiti\15_02_2017_Rjesenje\Ispit_2017_02_15\bin\Debug\netcoreapp2.0\appsettings.json
+C:\Users\HP\Documents\GitHub\Razvoj-Softvera-I\Ispiti\15_02_2017_Rjesenje\Ispit_2017_02_15\bin\Debug\netcoreapp2.0\bundleconfig.json
+C:\Users\HP\Documents\GitHub\Razvoj-Softvera-I\Ispiti\15_02_2017_Rjesenje\Ispit_2017_02_15\bin\Debug\netcoreapp2.0\Properties\launchSettings.json
+C:\Users\HP\Documents\GitHub\Razvoj-Softvera-I\Ispiti\15_02_2017_Rjesenje\Ispit_2017_02_15\bin\Debug\netcoreapp2.0\Ispit_2017_02_15.deps.json
+C:\Users\HP\Documents\GitHub\Razvoj-Softvera-I\Ispiti\15_02_2017_Rjesenje\Ispit_2017_02_15\bin\Debug\netcoreapp2.0\Ispit_2017_02_15.runtimeconfig.json
+C:\Users\HP\Documents\GitHub\Razvoj-Softvera-I\Ispiti\15_02_2017_Rjesenje\Ispit_2017_02_15\bin\Debug\netcoreapp2.0\Ispit_2017_02_15.runtimeconfig.dev.json
+C:\Users\HP\Documents\GitHub\Razvoj-Softvera-I\Ispiti\15_02_2017_Rjesenje\Ispit_2017_02_15\bin\Debug\netcoreapp2.0\Ispit_2017_02_15.dll
+C:\Users\HP\Documents\GitHub\Razvoj-Softvera-I\Ispiti\15_02_2017_Rjesenje\Ispit_2017_02_15\bin\Debug\netcoreapp2.0\Ispit_2017_02_15.pdb
+C:\Users\HP\Documents\GitHub\Razvoj-Softvera-I\Ispiti\15_02_2017_Rjesenje\Ispit_2017_02_15\obj\Debug\netcoreapp2.0\Ispit_2017_02_15.csprojAssemblyReference.cache
+C:\Users\HP\Documents\GitHub\Razvoj-Softvera-I\Ispiti\15_02_2017_Rjesenje\Ispit_2017_02_15\obj\Debug\netcoreapp2.0\Ispit_2017_02_15.AssemblyInfoInputs.cache
+C:\Users\HP\Documents\GitHub\Razvoj-Softvera-I\Ispiti\15_02_2017_Rjesenje\Ispit_2017_02_15\obj\Debug\netcoreapp2.0\Ispit_2017_02_15.AssemblyInfo.cs
+C:\Users\HP\Documents\GitHub\Razvoj-Softvera-I\Ispiti\15_02_2017_Rjesenje\Ispit_2017_02_15\obj\Debug\netcoreapp2.0\Ispit_2017_02_15.dll
+C:\Users\HP\Documents\GitHub\Razvoj-Softvera-I\Ispiti\15_02_2017_Rjesenje\Ispit_2017_02_15\obj\Debug\netcoreapp2.0\Ispit_2017_02_15.pdb

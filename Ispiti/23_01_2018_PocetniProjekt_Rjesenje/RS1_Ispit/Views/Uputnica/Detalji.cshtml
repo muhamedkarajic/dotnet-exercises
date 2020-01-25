@@ -1,0 +1,83 @@
+﻿@using RS1_Ispit_asp.net_core.ViewModels
+@{
+    Layout = null;
+}
+
+@model DetaljiUputniceViewModel
+
+<div id="detaljiUputniceForm">
+    <h3>Detalji uputnice </h3>
+    <h6>Podaci o uputnici (readonly)</h6>
+    <div class="form-group">
+        <label>Datum: @Model.DatumUputnice</label>
+    </div>
+    <div class="form-group">
+        <label>Pacijent: @Model.Pacijent</label>
+    </div>
+    <div class="form-group">
+        @if (Model.DatumRezultata == null)
+        {
+            <label>Datum rezultata: (nema rezultata)</label>
+        }
+        else
+        {
+            <label>Datum rezultata: @Model.DatumRezultata.GetValueOrDefault().ToString("dd.MM.yyyy.")</label>
+        }
+    </div>
+    <br />
+    <hr />
+    <div class="form-group">
+        <label>Zavrsen unos: <span class="btn btn-link" onclick="zakljucajUputnicu(@Model.Id)">Zaključaj</span></label>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Pretraga </th>
+                <th scope="col">Izmjerena vrijednost</th>
+                <th scope="col">JMJ</th>
+                <th scope="col">Akcija</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var rezultatPretrageRed in Model.RezultatiPretragaRedovi)
+            {
+                <tr>
+                    <td>@rezultatPretrageRed.Pretraga</td>
+                    <td>@(rezultatPretrageRed.IzmjerenaVrijednost != null ? rezultatPretrageRed.IzmjerenaVrijednost.ToString() : "(nema rezultata)")</td>
+                    <td>@(rezultatPretrageRed.JMJ != null ? rezultatPretrageRed.JMJ : "(nema rezultata)")</td>
+                    <td class="btn btn-link" onclick="urediRezultatPretrageShow(@rezultatPretrageRed.Id)">Uredi</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div id="urediRezultatPretrageShow"></div>
+
+
+    <script>
+        function zakljucajUputnicu(uputnicaId) {
+            $.ajax({
+                type: 'PUT',
+                url: '/Uputnica/Zakljucaj',
+                data: { uputnicaId: uputnicaId },
+                success: function (data) {
+                    $('#detaljiUputniceForm').html(data);
+                }
+            })
+
+        }
+        function urediRezultatPretrageShow(rezultatPretrageId) {
+            $.ajax({
+                type: 'GET',
+                url: '/Uputnica/RezultatPretrage',
+                data: { rezultatPretrageId: rezultatPretrageId },
+                success: function (data) {
+                    console.log("DATA PRET:", data);
+                    $('#urediRezultatPretrageShow').html(data);
+                }
+            })
+
+        }
+    </script>
+</div>
+

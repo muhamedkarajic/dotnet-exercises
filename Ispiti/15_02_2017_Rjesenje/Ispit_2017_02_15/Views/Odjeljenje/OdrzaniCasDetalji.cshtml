@@ -1,0 +1,118 @@
+﻿@using Ispit_2017_02_15.ViewModel;
+
+@model HashSet<OdrzaniCasDetaljiTabelaViewModel>;
+
+<div id="odrzaniCasDetaljiTabelaChild">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Student</th>
+                <th scope="col">Bodovi</th>
+                <th scope="col">Prisutan</th>
+                <th scope="col">Akcija</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var odrzaniCasRed in Model)
+            {
+                <tr>
+                    <td>@odrzaniCasRed.ImeStuenta @odrzaniCasRed.PrezimeStuenta</td>
+                    <td>@odrzaniCasRed.Bodovi</td>
+                    @if (odrzaniCasRed.Prisutan)
+                    {
+                        <td><span onclick="updatePrisustvoOdrzaniCasDetalj(@odrzaniCasRed.OdrzaniCasDetaljiId, false)" style="background-color: green; padding: 5px">Prisutan</span></td>
+                    }
+                    else
+                    {
+                        <td><span onclick="updatePrisustvoOdrzaniCasDetalj(@odrzaniCasRed.OdrzaniCasDetaljiId, true)" style="background-color: red; padding: 5px">Odsutan</span></td>
+                    }
+
+                    @if (odrzaniCasRed.Bodovi > 0)
+                    {
+                        <td>
+                            <a class="btn btn-primary" onclick="editOdrzaniCasDetalji(@odrzaniCasRed.OdrzaniCasDetaljiId)">Edit</a>
+                        </td>
+                    }
+                    else
+                    {
+                        <td> </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <hr />
+
+
+    <div id="odrzaniCasDetaljiForm" hidden>
+        <h3>Uredi bodove</h3>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>Student: </td>
+                    <th id="nazivStudenta">...</th>
+                </tr>
+                <tr>
+                    <td>Bodovi: </td>
+                    <td><input id="bodoviStudenta" required type="number" name="bodovi" /></td>
+                </tr>
+                <tr>
+                    <td>
+                        <button class="btn btn-primary" onclick="updateOdrzaniCasDetalji()">Snimi</button>
+                    </td>
+                    <td> </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+
+<script>
+    let globalOdrzaniCasDetaljiId = 0;
+
+    function editOdrzaniCasDetalji(odrzaniCasDetaljiId) {
+        console.log("EXECUTRED!");
+        if (globalOdrzaniCasDetaljiId == odrzaniCasDetaljiId || globalOdrzaniCasDetaljiId == 0) {
+            $('#odrzaniCasDetaljiForm').toggle();
+        }
+        globalOdrzaniCasDetaljiId = odrzaniCasDetaljiId;
+
+        $.ajax({
+            url: '/Odjeljenje/OdrzaniCasDetalj',
+            method: 'GET',
+            data: { odrzaniCasDetaljiId: odrzaniCasDetaljiId },
+            success: function (data) {
+                console.log("data:", data);
+
+                $('#nazivStudenta').html(data.imeStudenta + " " + data.prezimeStudenta);
+                $('#bodoviStudenta').val(data.bodovi);
+            }
+        });
+    }
+
+    function updatePrisustvoOdrzaniCasDetalj(odrzaniCasDetaljiId, prisutan) {
+        $.ajax({
+            url: '/Odjeljenje/UpdatePrisustvoOdrzaniCasDetalj',
+            method: 'POST',
+            data: { odrzaniCasDetaljiId: odrzaniCasDetaljiId, prisutan: prisutan },
+            success: function (data) {
+                $('body').html(data);
+            }
+        });
+    }
+
+    function updateOdrzaniCasDetalji() {
+        $.ajax({
+            url: '/Odjeljenje/UpdateOdrzaniCasDetalj',
+            method: 'POST',
+            data: { odrzaniCasDetaljiId: globalOdrzaniCasDetaljiId, bodovi: $('#bodoviStudenta').val() },
+            success: function (data) {
+                $('body').html(data);
+            }
+        });
+    }
+
+</script>

@@ -1,0 +1,68 @@
+﻿@using Ispit_2017_02_15.ViewModel;
+@model OdrzaniCasoviTabelaViewModel
+
+
+<br />
+<br />
+<br />
+
+<table class="table table-bordered">
+    <thead>
+        @Model.ImePrezimeNastavnika
+        <tr>
+            <th scope="col">Datum održanog časa</th>
+            <th scope="col">AkademskaGodina</th>
+            <th scope="col">Broj prisutnih</th>
+            <th scope="col">Predmet</th>
+            <th scope="col">ProsjecnaOcjena</th>
+            <th scope="col">Akcija</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var odrzaniCasRed in Model.OdrzaniCasRed)
+        {
+        <tr>
+            <td>@odrzaniCasRed.Datum.ToString("dd.MM.yyyy.")</td>
+            <td>@odrzaniCasRed.OpisAkademskeGodine</td>
+            <td>@odrzaniCasRed.BrojPrisutnih od @odrzaniCasRed.BrojStudenata</td>
+            <td>@odrzaniCasRed.NazivPredmeta</td>
+            <td>@odrzaniCasRed.ProsjecnaOcjena</td>
+            <td>
+                <a class="btn btn-primary" asp-route-odrzanCasId="@odrzaniCasRed.Id" asp-action="OdrzanCas">Edit</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+<hr />
+
+<br />
+<br />
+
+<form asp-action="DodajNoviCas" asp-route-nastavnikId="@Model.NastavnikId" >
+    <h3>Novi čas</h3>
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>Nastavnik: </td>
+                <th>@Model.ImePrezimeNastavnika</th>
+            </tr>
+            <tr>
+                <td>Datum: </td>
+                <td><input required type="date"  name="datum" /></td>
+            </tr>
+            <tr>
+                <td>Ak. godina / predmet: </td>
+                <td><select required asp-items="@Model.AkGodPredmeti" name="predmetId"></select></td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="btn btn-primary" >Snimi</button>
+                </td>
+                <td> </td>
+            </tr>
+        </tbody>
+    </table>
+</form>
+

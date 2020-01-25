@@ -1,0 +1,123 @@
+﻿@using RS1_Ispit_asp.net_core.ViewModels
+
+@model UputnicaPageViewModel
+
+@{
+    ViewData["Title"] = "Uputnice";
+}
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Uputio</th>
+            <th scope="col">Pacijent</th>
+            <th scope="col">Vrsta pretraga</th>
+            <th scope="col">Datum evidentiranja rezultata pretrage</th>
+            <th scope="col">Akcija</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var uputnicaRed in Model.UputniceRedovi)
+        {
+            <tr>
+                <td>@uputnicaRed.DatumUputnice.ToString("dd.MM.yyyy.") | @uputnicaRed.InicjaliLjekara</td>
+                <td>@uputnicaRed.Pacijent</td>
+                <td>@uputnicaRed.VrstaPretrage</td>
+                @if (uputnicaRed.DatumRezultata == null)
+                {
+                    <td>(nema rezultata)</td>
+                }
+                else
+                {
+                    <td>@uputnicaRed.DatumRezultata</td>
+                }
+                <td class="btn btn-link" onclick="detaljiUputniceShow(@uputnicaRed.Id)">Detalji</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <button id="dodajUputnicuShow" class="btn btn-primary" onclick="dodajUputnicuShow(this)">Dodaj</button>
+</div>
+<br />
+<form id="dodajUputnicuForm" hidden>
+    <div class="form-group">
+        <label>Ljekar uputio:</label>
+        <select asp-items="Model.Ljekari" required name="ljekarId"></select>
+    </div>
+    <div class="form-group">
+        <label>Datum:</label>
+        <input id="datum" type="date" required name="datumUputnice" />
+    </div>
+    <div class="form-group">
+        <label>Pacijent:</label>
+        <select asp-items="Model.Pacijenti" required name="pacijentId"></select>
+    </div>
+    <div class="form-group">
+        <label>Vrsta pretrage:</label>
+        <select asp-items="Model.VrstePretraga" required name="vrstePretragaId"></select>
+    </div>
+    <button type="submit" class="btn btn-primary">Snimi</button>
+</form>
+<br />
+<br />
+<br />
+<div id="detaljiUputniceShow"></div>
+
+<script>
+    function dodajUputnicuShow(e) {
+        if ($('#dodajUputnicuForm').is(':hidden')) {
+            $(e).text('Odustani');
+            $(e).removeClass('btn-primary');
+            $('#dodajUputnicuForm').show();
+        }
+        else {
+            $(e).text('Dodaj');
+            $(e).addClass('btn-primary');
+
+            $('#dodajUputnicuForm').hide();
+        }
+    }
+    function refreshBody() {
+        $.ajax({
+            type: "GET",
+            url: '/Uputnica/Index',
+            success: function (data) {
+                $('body').html(data);
+            },
+            error: function (data) {
+                console.log("error body", data);
+            }
+        })
+    }
+    function detaljiUputniceShow(uputnicaId) {
+        $.ajax({
+            type: 'GET',
+            url: '/Uputnica/Detalji',
+            data: { uputnicaId: uputnicaId },
+            success: function (data) {
+                $('#detaljiUputniceShow').html(data);
+            }
+        })
+    }
+    $('#dodajUputnicuForm').on('submit', function (e) {
+        e.preventDefault();
+
+        console.log('serialize', $(this).serialize())
+        $.ajax({
+            type: "POST",
+            url: '/Uputnica/Dodaj',
+            data: $(this).serialize(),
+            success: function (data) {
+                $('body').html(data);
+            },
+            error: function (data) {
+                console.log("error", data);
+            }
+        })
+
+    });
+
+</script>
