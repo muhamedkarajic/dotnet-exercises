@@ -1,0 +1,13 @@
+C:\Users\HP\Documents\GitHub\Razvoj-Softvera-I\Ispiti\21_06_2017_Rjesenje\RS1_Ispit_2017-06-21_v1\bin\Debug\netcoreapp2.0\appsettings.json
+C:\Users\HP\Documents\GitHub\Razvoj-Softvera-I\Ispiti\21_06_2017_Rjesenje\RS1_Ispit_2017-06-21_v1\bin\Debug\netcoreapp2.0\bundleconfig.json
+C:\Users\HP\Documents\GitHub\Razvoj-Softvera-I\Ispiti\21_06_2017_Rjesenje\RS1_Ispit_2017-06-21_v1\bin\Debug\netcoreapp2.0\Properties\launchSettings.json
+C:\Users\HP\Documents\GitHub\Razvoj-Softvera-I\Ispiti\21_06_2017_Rjesenje\RS1_Ispit_2017-06-21_v1\bin\Debug\netcoreapp2.0\RS1_Ispit_2017-06-21_v1.deps.json
+C:\Users\HP\Documents\GitHub\Razvoj-Softvera-I\Ispiti\21_06_2017_Rjesenje\RS1_Ispit_2017-06-21_v1\bin\Debug\netcoreapp2.0\RS1_Ispit_2017-06-21_v1.runtimeconfig.json
+C:\Users\HP\Documents\GitHub\Razvoj-Softvera-I\Ispiti\21_06_2017_Rjesenje\RS1_Ispit_2017-06-21_v1\bin\Debug\netcoreapp2.0\RS1_Ispit_2017-06-21_v1.runtimeconfig.dev.json
+C:\Users\HP\Documents\GitHub\Razvoj-Softvera-I\Ispiti\21_06_2017_Rjesenje\RS1_Ispit_2017-06-21_v1\bin\Debug\netcoreapp2.0\RS1_Ispit_2017-06-21_v1.dll
+C:\Users\HP\Documents\GitHub\Razvoj-Softvera-I\Ispiti\21_06_2017_Rjesenje\RS1_Ispit_2017-06-21_v1\bin\Debug\netcoreapp2.0\RS1_Ispit_2017-06-21_v1.pdb
+C:\Users\HP\Documents\GitHub\Razvoj-Softvera-I\Ispiti\21_06_2017_Rjesenje\RS1_Ispit_2017-06-21_v1\obj\Debug\netcoreapp2.0\RS1_Ispit_2017-06-21_v1.csprojAssemblyReference.cache
+C:\Users\HP\Documents\GitHub\Razvoj-Softvera-I\Ispiti\21_06_2017_Rjesenje\RS1_Ispit_2017-06-21_v1\obj\Debug\netcoreapp2.0\RS1_Ispit_2017-06-21_v1.AssemblyInfoInputs.cache
+C:\Users\HP\Documents\GitHub\Razvoj-Softvera-I\Ispiti\21_06_2017_Rjesenje\RS1_Ispit_2017-06-21_v1\obj\Debug\netcoreapp2.0\RS1_Ispit_2017-06-21_v1.AssemblyInfo.cs
+C:\Users\HP\Documents\GitHub\Razvoj-Softvera-I\Ispiti\21_06_2017_Rjesenje\RS1_Ispit_2017-06-21_v1\obj\Debug\netcoreapp2.0\RS1_Ispit_2017-06-21_v1.dll
+C:\Users\HP\Documents\GitHub\Razvoj-Softvera-I\Ispiti\21_06_2017_Rjesenje\RS1_Ispit_2017-06-21_v1\obj\Debug\netcoreapp2.0\RS1_Ispit_2017-06-21_v1.pdb

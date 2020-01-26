@@ -1,0 +1,89 @@
+﻿@using RS1_Ispit_2017_06_21_v1.ViewModel
+
+
+@model MaturskiIspitTableVM
+@{
+    ViewData["Title"] = "Index";
+}
+
+<br />
+<br />
+<br />
+
+@if (Model.MaturskiIspitRedovi.Any())
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Datum </th>
+                <th scope="col">Odjeljenje </th>
+                <th scope="col">Ispitivač </th>
+                <th scope="col">Prosječni bodovi</th>
+                <th scope="col">Akcija</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var red in Model.MaturskiIspitRedovi)
+            {
+            <tr>
+                <td>@red.Datum</td>
+                <td>@red.Odjeljenje</td>
+                <td>@red.Ispitivac</td>
+                <td>@red.ProsjecniBodovi</td>
+
+                
+                @if (Model.IspitivacId == red.IspitivacId)
+                {
+                    <td>
+                        <a asp-action="DetaljiMaturskogIspita" asp-route-matriskiIspitId="@red.MaturskiIspitId">Detalji</a>
+                    </td>
+                }
+                else
+                {
+                    <td> </td>
+                }
+
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<button class="btn btn-info" onclick="prikaziNoviMaturskiIspitForma()">Dodaj</button>
+
+<form method="post" hidden id="noviMaturskiIspitForma" asp-action="NoviMaturskiIspit" asp-controller="Ispiti">
+    <h3>Novi maturski ispit</h3>
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <td>Ispitivač: </td>
+                <th>@Model.Ispitivac</th>
+            </tr>
+            <tr>
+                <td>Datum: </td>
+                <td>
+                    <input name="datum" type="date" required />
+                </td>
+            </tr>
+            <tr>
+                <td>Odjeljenje: </td>
+                <td>
+                    <select name="odjeljenjeId" asp-items="Model.Odjeljenja"></select>
+                </td>
+            </tr>
+            <tr>
+                <td> </td>
+                <td>
+                    <button class="btn btn-primary" type="submit">Snimi</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</form>
+
+
+<script>
+    function prikaziNoviMaturskiIspitForma() {
+        $('#noviMaturskiIspitForma').toggle('slow');
+    }
+</script>

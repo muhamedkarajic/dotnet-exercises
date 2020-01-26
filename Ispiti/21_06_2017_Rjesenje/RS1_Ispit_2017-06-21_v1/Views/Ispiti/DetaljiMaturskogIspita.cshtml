@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewData["Title"] = "DetaljiMaturskogIspita";
+}
+
+@using RS1_Ispit_2017_06_21_v1.ViewModel;
+@model DetaljiMaturskogIspitaVM;
+
+<h3>Detalji maturskog ispita</h3>
+<h5>Podaci o ispitu</h5>
+<table class="table table-bordered">
+
+    <tbody>
+        <tr>
+            <td>Ispitivač: </td>
+            <th>@Model.Ispitivac</th>
+        </tr>
+        <tr>
+            <td>Datum: </td>
+            <th>@Model.Datum</th>
+        </tr>
+        <tr>
+            <td>Odjeljenje: </td>
+            <th>@Model.Odjeljenje</th>
+        </tr>
+    </tbody>
+</table>
+
+<div id="tabelaDetaljiMaturskogIspitaParent"></div>
+
+<script>
+    function tabelaDetaljiMaturskogIspitaParent() {
+        $.ajax({
+            url: '/Ispiti/RezultatiIspita',
+            data: { matriskiIspitId:  @Model.MaturskogIspitId },
+            success: function (data) {
+                $('#tabelaDetaljiMaturskogIspitaParent').html(data);
+
+            }
+        });
+    }
+
+    tabelaDetaljiMaturskogIspitaParent();
+</script>

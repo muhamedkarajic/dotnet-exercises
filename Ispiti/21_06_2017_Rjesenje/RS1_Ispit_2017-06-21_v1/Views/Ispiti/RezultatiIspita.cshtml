@@ -1,0 +1,113 @@
+﻿@using RS1_Ispit_2017_06_21_v1.ViewModel;
+@model HashSet<RezultatiIspitaRedVM>;
+
+@{
+    Layout = null;
+}
+
+<br />
+<br />
+<br />
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th scope="col">Učenik </th>
+            <th scope="col">Opći uspjeh </th>
+            <th scope="col">Bodovi (max 100)</th>
+            <th scope="col">Oslobođeni</th>
+            <th scope="col">Akcija</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var red in Model)
+        {
+            <tr>
+                <td>@red.UcenikIme @red.UcenikPrezime</td>
+                <td>@red.OpciUspjehUcenika</td>
+
+
+                @if (@red.Oslobodjen)
+                {
+                    <td>oslobođen</td>
+                    <td>DA</td>
+                    <td> </td>
+                }
+                else
+                {
+                    <td>
+                        <form asp-action="AzurirajMaturskiIspitStavka" asp-route-maturskiIspitStavkaId="@red.MaturskiIspitStavkaId" >
+                            <input name="bodovi" asp-for="@red.Bodovi" />
+                            <button type="submit" >Azuriraj</button>
+                        </form>
+
+                    </td>
+                    <td>
+                        <form method="post" asp-action="OslobodljenMaturskiIspitStavka" asp-route-maturskiIspitStavkaId="@red.MaturskiIspitStavkaId">
+                            <span>NE</span> <button type="submit">Oslobodi</button>
+                        </form>
+                    </td>
+                    <td>
+                        <button onclick="detaljiMaturskogIspita(@red.MaturskiIspitStavkaId)">Uredi</button>
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
+<table hidden id="detaljiMaturskogIspitaChild" class="table table-striped">
+    <tbody>
+        <tr>
+            <td>Učenik: </td>
+            <td id="imePrezimeUcenika">Adela Gosto</td>
+        </tr>
+        <tr>
+            <td>Bodovi:</td>
+            <td>
+                <input id="bodoviUcenika" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button onclick="azurirajMaturskiIspitStavka()" class="btn btn-primary">Snimi</button>    
+            </td>
+            <td> </td>
+        </tr>
+    </tbody>
+</table>
+
+<script>
+    let maturskiIspitStavkaIdGlobal = 0;
+
+
+    function azurirajMaturskiIspitStavka() {
+        $.ajax({
+            url: '/Ispiti/AzurirajMaturskiIspitStavka',
+            data: {
+                maturskiIspitStavkaId: maturskiIspitStavkaIdGlobal,
+                bodovi: $('#bodoviUcenika').val()
+            },
+            success: function (data) {
+                console.log("data", data);
+                $('body').html(data);
+            }
+        });
+    }
+
+
+    function detaljiMaturskogIspita(maturskiIspitStavkaId) {
+        if (maturskiIspitStavkaId == maturskiIspitStavkaIdGlobal || maturskiIspitStavkaIdGlobal == 0) {
+                $('#detaljiMaturskogIspitaChild').toggle();
+        }
+        maturskiIspitStavkaIdGlobal = maturskiIspitStavkaId;
+
+        $.ajax({
+            url: '/Ispiti/DetaljiMaturskiIspitStavka',
+            data: { maturskiIspitStavkaId:  maturskiIspitStavkaId },
+            success: function (data) {
+                $('#imePrezimeUcenika').html(data.ucenikIme);
+                $('#bodoviUcenika').val(data.bodovi);
+            }
+        });
+    }
+</script>
