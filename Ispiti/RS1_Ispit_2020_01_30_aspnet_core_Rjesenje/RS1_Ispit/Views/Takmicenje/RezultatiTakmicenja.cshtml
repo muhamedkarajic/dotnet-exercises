@@ -1,0 +1,131 @@
+﻿@using RS1_Ispit_asp.net_core.ViewModels;
+@model RezultatiTakmicenjaTabelaVM
+
+
+<table class="table table-striped">
+    <tr>
+        <td>Škola domaćin: </td>
+        <td>@Model.SkolaDomacin</td>
+    </tr>
+    <tr>
+        <td>Predmet: </td>
+        <td>@Model.PredmetNaziv</td>
+    </tr>
+    <tr>
+        <td>Razred: </td>
+        <td>@Model.Razred</td>
+    </tr>
+    <tr>
+        <td>Datum: </td>
+        <td>@Model.Datum.ToString("dd.MM.yyyy")</td>
+    </tr>
+    <tr>
+        <td>
+            <a hidden="@(Model.Zakljucano)" asp-action="ZakljucajRezultate" asp-route-takmicenjeId="@Model.takmicenjeId">
+                Zaključaj
+            </a>
+        </td>
+        <td> </td>
+    </tr>
+
+</table>
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Odjeljenje</th>
+            <th>
+                Broj u
+                dnevniku P
+            </th>
+            <th>Pristupio </th>
+            <th>
+                Rezultat bodovi
+                (max 100)
+            </th>
+            <th>Akcija</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var red in Model.RezultatiTakmicenjaRedovi)
+        {
+            <tr>
+                <td>@red.Odjeljenje</td>
+                <td>@red.BrojUDnevniku</td>
+
+                @if (@red.Pristupio == true)
+                {
+                    <td>
+                        <form method="post" asp-action="TogglePrisustvo" asp-route-takmicenjeUcenikId="@red.TakmicenjeUcenikId" asp-route-prisustvo="false">
+                            <button disabled="@(Model.Zakljucano)" class="btn btn-info">DA</button>
+                        </form>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <form  method="post" asp-action="TogglePrisustvo" asp-route-takmicenjeUcenikId="@red.TakmicenjeUcenikId" asp-route-prisustvo="true">
+                            <button disabled="@(Model.Zakljucano)" class="btn btn-danger">NE</button>
+                        </form>
+                    </td>
+                }
+                <td><input disabled="@(Model.Zakljucano || !red.Pristupio)" asp-for="@red.Bodovi" onchange="prikaziBodove(this, @red.TakmicenjeUcenikId)" /></td>
+                <td>
+                    <button disabled="@(Model.Zakljucano || !red.Pristupio)" class="btn btn-info" onclick="dodajUcenikaFormToggle(@red.TakmicenjeUcenikId)">Uredi</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    function prikaziBodove(e, takmicenjeUcenikId) {
+        let bodovi = $(e).val();
+        console.log("bodovi:", bodovi, "takmicenjeUcenikId", takmicenjeUcenikId);
+        $.ajax({
+            url: '/Takmicenje/AzurirajBodoveUcenika',
+            data: {
+                takmicenjeUcenikId: takmicenjeUcenikId,
+                bodovi: bodovi
+            },
+            success: function (data) {
+                $('body').html(data);
+                console.log("SUCCESS!");
+            },
+            method: 'POST'
+        })
+
+    }
+
+</script>
+
+<button class="btn btn-info" onclick="dodajUcenikaFormToggle(0)" disabled="@(Model.Zakljucano)">Dodaj ucenika</button>
+
+
+
+<div id="dodajUcenikaFormParent2">
+
+</div>
+
+
+<script>
+    function dodajUcenikaFormToggle(takmicenjeUcenikId) {
+        console.log("RUNNED!");
+        $.ajax({
+            url: '/Takmicenje/DodajUrediUcenika',
+            data: {
+                takmicenjeId: @Model.takmicenjeId,
+                takmicenjeUcenikId: takmicenjeUcenikId,
+                razred: @Model.Razred,
+            },
+            success: function (data) {
+                console.log(data);
+                $('#dodajUcenikaFormParent2').html(data);
+            }
+        });
+    }
+
+
+</script>

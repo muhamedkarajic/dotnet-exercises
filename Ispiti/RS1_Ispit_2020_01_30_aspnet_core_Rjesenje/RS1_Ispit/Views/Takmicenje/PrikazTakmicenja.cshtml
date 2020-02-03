@@ -1,0 +1,116 @@
+﻿@using RS1_Ispit_asp.net_core.ViewModels
+@model PrikazTakmicenjaTableVM
+
+<table class="table">
+    <tr>
+        <td>Škola domaćin: </td>
+        <td>@Model.SkolaNaziv</td>
+    </tr>
+    <tr>
+        <td>Razred: </td>
+
+
+        @if (@Model.Razred == 0)
+        {
+            <td>Svi</td>
+        }
+        else
+        {
+            <td>@Model.Razred</td>
+        }
+    </tr>
+</table>
+
+
+<table class="table">
+    <tr>
+        <th>
+            Tamičenje ID:
+        </th>
+        <th>Predmet: </th>
+        <th>Razred: </th>
+        <th>Datum: </th>
+        <th>
+            Broj
+            učesnika
+            koji nisu
+            pristupili:
+        </th>
+        <th>
+            Najbolji učesnik
+            (Škola | Odjeljenje
+            | Ime i prezime):
+        </th>
+        <th>Akcija: </th>
+    </tr>
+
+
+    @foreach (var red in Model.PrikazTakmicenjaRedovi)
+    {
+        <tr>
+            <td>
+                @red.TakmicenjeId
+            </td>
+            <td>@red.NazivPredmeta</td>
+            <td>@red.Razred</td>
+            <td>@red.Datum.ToString("dd.MM.yyyy")</td>
+            <td>
+                @red.BrojUcenikaNisuPristupili
+            </td>
+            <td>
+                @red.NajboljiUcenikSkola | @red.NajboljiUcenikOdjeljenje | @red.NajboljiUcenikImePrezime
+            </td>
+            <td>
+                <a asp-action="RezultatiTakmicenja" asp-route-takmicenjeId="@red.TakmicenjeId">
+                    Rezultati
+                </a>
+            </td>
+        </tr>
+    }
+</table>
+
+
+<button onclick="dodavanjeTakmicenjaFormaToggle()" class="btn btn-info">Dodaj</button>
+<br />
+<br />
+<br />
+<form id="dodavanjeTakmicenjaForma" hidden asp-action="DodajTakmicenje" asp-route-skolaId="@Model.SkolaId">
+    <table class="table table-striped">
+        <tr>
+            <td>Škola domaćin: </td>
+            <td>@Model.SkolaNaziv</td>
+        </tr>
+        <tr>
+            <td>Predmet: </td>
+            <td><select name="nazivPredmeta" asp-items="Model.Predmeti"></select></td>
+        </tr>
+        <tr>
+            <td>Razred: </td>
+            <td>
+                <select name="razred">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Datum: </td>
+            <td><input name="datum" type="date" /></td>
+        </tr>
+        <tr>
+            <td> </td>
+            <td>
+                <button>Snimi</button>
+            </td>
+        </tr>
+    </table>
+</form>
+
+
+<script>
+    function dodavanjeTakmicenjaFormaToggle() {
+        $('#dodavanjeTakmicenjaForma').toggle('fast');
+    }
+</script>

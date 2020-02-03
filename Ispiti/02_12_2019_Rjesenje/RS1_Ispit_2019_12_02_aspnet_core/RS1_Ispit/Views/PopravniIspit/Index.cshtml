@@ -1,0 +1,30 @@
+﻿@using RS1_Ispit_asp.net_core.ViewModel;
+@model HashSet<OdjeljenjeRedVM>;
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Školska godina</th>
+            <th scope="col">Škola</th>
+            <th scope="col">Odjeljenje</th>
+            <th scope="col">Akcija</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var red in Model)
+        {
+            <tr>
+                <td>@red.SkolskaGodina</td>
+                <td>@red.NazivSkola</td>
+                <td>@red.OdjeljenjeOznaka</td>
+                <td>
+                    <a asp-action="GetPopravniIspiti" asp-route-odjeljenjeId="@red.OdjeljenjeId">Odaberi</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

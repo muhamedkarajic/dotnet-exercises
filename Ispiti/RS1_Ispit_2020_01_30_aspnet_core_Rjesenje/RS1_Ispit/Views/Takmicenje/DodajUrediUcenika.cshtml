@@ -1,0 +1,54 @@
+﻿@using RS1_Ispit_asp.net_core.ViewModels;
+@model DodajUrediUcenikaVM;
+
+@{
+    Layout = null;
+}
+
+
+@if (Model.TakmicenjeUcenikId != 0)
+{
+    <form method="post" asp-action="AzurirajBodoveUcenika" asp-route-takmicenjeUcenikId="@Model.TakmicenjeUcenikId">
+
+        <table class="table">
+            <tr>
+                <th>Ucenik: </th>
+                <td>@Model.UcenikImePrezime</td>
+            </tr>
+            <tr>
+                <th>Bodovi: </th>
+                <td><input name="bodovi" asp-for="@Model.Bodovi" /></td>
+            </tr>
+            <tr>
+                <th>
+                    <button class="btn btn-info">Snimi</button>
+                </th>
+                <th> </th>
+            </tr>
+        </table>
+    </form>
+}
+else
+{
+    <form method="post" asp-action="DodajUcenika" asp-route-takmicenjeId="@Model.TakmicenjeId">
+        <table class="table">
+            <tr>
+                <th>Ucenik: </th>
+                <th><select name="odjeljenjeStavkaId" asp-items="Model.Ucenici"></select></th>
+            </tr>
+            <tr>
+                <th>Bodovi: </th>
+                <th><input required max="100" min="0" type="number" name="bodovi" /></th>
+            </tr>
+            <tr>
+                <th>
+                    <button class="btn btn-info">Snimi</button>
+                </th>
+                <th> </th>
+            </tr>
+        </table>
+    </form>
+
+}
+
+

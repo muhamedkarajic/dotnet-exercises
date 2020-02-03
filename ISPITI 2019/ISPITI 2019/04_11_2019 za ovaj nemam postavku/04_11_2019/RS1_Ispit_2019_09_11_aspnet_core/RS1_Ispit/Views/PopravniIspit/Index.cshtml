@@ -1,0 +1,22 @@
+﻿@model  RS1_Ispit_asp.net_core.ViewModels.PopravniIspitIndexVM
+@{
+    ViewData["Title"] = "Index";
+}
+
+<table class="table table hover">
+    <tr>
+        <td>Razred</td>
+        <td>Predmet</td>
+        <td>Akcija</td>
+    </tr>
+    @foreach(var i in Model.Predmeti)
+    {
+        <tr>
+            <td>@i.Razred</td>
+            <td>@i.Predmet</td>
+            <td><a href="/PopravniIspit/Prikazi/@i.PredmetId">Odaberi</a></td>
+        </tr>
+    }
+
+
+</table>

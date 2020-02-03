@@ -1,0 +1,29 @@
+﻿@model List<SelectListItem>
+
+
+<form method="get" asp-action="PrikazTakmicenja">
+    <table class="table table-striped">
+        <tr>
+            <td>Škola domaćin: </td>
+            <td><select name="skolaId" asp-items="Model"></select></td>
+        </tr>
+        <tr>
+            <td>Razred: </td>
+            <td>
+                <select name="razred">
+                    <option value="0">Svi</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td> </td>
+            <td>
+                <button>Odaberi</button>
+            </td>
+        </tr>
+    </table>
+</form>

@@ -1,0 +1,88 @@
+﻿@using RS1_Ispit_asp.net_core.ViewModel;
+
+@model PopravniIspitTableVM;
+
+@{
+    ViewData["Title"] = "GetPopravniIspiti";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Datum popravnog ispita</th>
+            <th scope="col">Predmet</th>
+            <th scope="col">
+                Broj učenika na
+                popravnom
+                ispitu **
+            </th>
+            <th scope="col">
+                Broj učenika koji su položili
+                popravni ispit (bodovi veći
+                od 50) **
+            </th>
+            <th scope="col">Akcija</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var red in Model.PopravniIspitRedovi)
+        {
+            <tr>
+                <td>@red.DatumPopravnog</td>
+                <td>@red.NazivPredmet</td>
+                <td>@red.BrojUcenikaNaIspitu</td>
+                <td>@red.BrojUcenikaPolozili</td>
+                <td>
+                    <a asp-action="UrediPopravniIspit" asp-route-popravniIspitId="@red.PopravniIspitId">Uredi</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<button id="showDodajPopravniForm" onclick="showDodajPopravniForm()">Dodaj</button>
+
+<br />
+<br />
+<br />
+
+<form hidden id="dodajPopravniForm" asp-action="DodajPopravniIspit" asp-route-odjeljenjeId="@Model.OdjeljenjeId">
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>Predmet</td>
+                <td>
+                    <select name="predmetId" asp-items="Model.Predmeti"></select>
+                </td>
+            </tr>
+            <tr>
+                <td>Datum ispita: </td>
+                <td><input name="datumIspita" type="date" /></td>
+            </tr>
+            <tr>
+                <td>Škola: </td>
+                <td>@Model.NazivSkole</td>
+            </tr>
+            <tr>
+                <td>Školska godina: </td>
+                <td>@Model.SkolskaGodinaNaziv</td>
+            </tr>
+            <tr>
+                <td>Odjeljenje: </td>
+                <td>@Model.OznakaOdjeljenja</td>
+            </tr>
+            <tr>
+                <td> </td>
+                <td>
+                    <button class="btn btn-primary">Snimi</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</form>
+
+<script>
+    function showDodajPopravniForm() {
+        $('#dodajPopravniForm').toggle('fast');
+    }
+</script>

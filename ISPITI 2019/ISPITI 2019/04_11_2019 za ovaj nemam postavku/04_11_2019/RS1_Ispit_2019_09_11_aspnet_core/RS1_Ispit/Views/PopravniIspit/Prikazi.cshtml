@@ -1,0 +1,32 @@
+﻿@model RS1_Ispit_asp.net_core.ViewModels.PopravniIspitPrikaziVM
+@{
+    ViewData["Title"] = "Prikazi";
+}
+
+
+<table class="table table hover">
+    <tr>
+        <td>Skola</td>
+        <td>Skolska godina</td>
+        <td>Datum</td>
+        <td>Broj ucenika na popravnom ispitu</td>
+        <td>Broj ucenika koji su polozili</td>
+        <td>Akcija</td>
+    </tr>
+    @foreach (var i in Model.PopravniIspiti)
+    {
+        <tr>
+            <td>@i.Skola</td>
+            <td>@i.SkolskaGodina</td>
+            <td>@i.Datum</td>
+            <td>@i.BrojUcenikaNaPopravnom</td>
+            <td>@i.BrojUcenikaKojiSuPolozili</td>
+            <td><a href="/PopravniIspit/Uredi/@i.PopravniIspitId">Uredi</a></td>
+        </tr>
+    }
+
+
+</table>
+
+
+<td><a href="/PopravniIspit/Dodaj/@Model.Id" class="btn btn-info">Dodaj</a></td>
