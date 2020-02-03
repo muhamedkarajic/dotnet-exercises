@@ -1,0 +1,146 @@
+﻿@using RS1_Ispit_asp.net_core.ViewModels;
+@model UrediPopravniIspitTabelaVM;
+
+
+<table class="table">
+    <tr>
+        <td>1. Član komisije:</td>
+        <td>
+            <label>@Model.Nastavnik1ImePrezime</label>
+        </td>
+    </tr>
+    <tr>
+        <td>2. Član komisije: </td>
+        <td>
+            <label>@Model.Nastavnik2ImePrezime</label>
+        </td>
+    </tr>
+    <tr>
+        <td>3. Član komisije: </td>
+        <td>
+            <label>@Model.Nastavnik3ImePrezime</label>
+        </td>
+    </tr>
+    <tr>
+        <td>Datum ispita: </td>
+        <td>
+            @Model.Datum.ToString("dd.MM.yyyyy")
+        </td>
+    </tr>
+    <tr>
+        <td>Škola: </td>
+        <td>@Model.SkolaNaziv</td>
+    </tr>
+    <tr>
+        <td>Školska godina: </td>
+        <td>@Model.SkolskaGodinaNaziv</td>
+    </tr>
+    <tr>
+        <td>Predmet: </td>
+        <td>@Model.PredmetNaziv</td>
+    </tr>
+</table>
+
+
+<table class="table">
+    <tr>
+        <th>Učenik</th>
+        <th>Odjeljenje</th>
+        <th>
+            Broj u
+            dnevniku
+        </th>
+        <th>Pristupio ispitu</th>
+        <th>
+            Rezultat maturskog
+            (max 100)
+        </th>
+        <th>Akcija</th>
+    </tr>
+    @foreach (var red in Model.UrediPopravniIspitRedVMs)
+    {
+        <tr>
+            <td>@red.UcenikImePrezime</td>
+            <td>@red.OdjeljenjeOznaka</td>
+            <td>
+                @red.BrojUDnevniku
+            </td>
+            @if (@red.Prisutan)
+            {
+                <td><a asp-action="PopravniIspitStavkaToggle" asp-route-popravniIspitStavkaId="@red.PopravniIspitStavkaId" class="btn btn-success">DA</a></td>
+                <td>
+                    <input onchange="AzurirajBodoveUcenika(@red.PopravniIspitStavkaId, this)" asp-for="@red.Bodovi" />
+                </td>
+                <td><button onclick="UcenikaPopravnogIspita(@red.PopravniIspitStavkaId)">Uredi</button></td>
+
+            }
+            else if (@red.Bodovi == 0)
+            {
+                <td><span style="color: red;">Nema pravo na popravni</span></td>
+                <td>0</td>
+                <td> </td>
+            }
+            else
+            {
+                <td><a asp-action="PopravniIspitStavkaToggle" asp-route-popravniIspitStavkaId="@red.PopravniIspitStavkaId" class="btn btn-danger">NE</a></td>
+                <td>x</td>
+                <td> </td>
+            }
+        </tr>
+    }
+</table>
+
+<div>
+    <button class="btn btn-primary" onclick="DodajUcenikaForm()">Dodaj Ucenika</button>
+    <a class="btn btn-info" asp-action="PrikazPopravnihIspita" asp-route-SkolaId="@Model.SkolaId" asp-route-PredmetId="@Model.PredmetId" asp-route-SkolskaGodinaId="@Model.SkolskaGodinaId">Dodaj Popravni Ispit</a>
+</div>
+
+
+<div id="UcenikaPopravnogIspitaFormParent">
+
+
+</div>
+
+<script>
+    function AzurirajBodoveUcenika(popravniIspitStavkaId, e) {
+        let bodovi = $(e).val();
+        $.ajax({
+            url: '/PopravniIspit/IzmjeniBodoveUceniku',
+            data: {
+                popravniIspitStavkaId: popravniIspitStavkaId,
+                bodovi: bodovi
+            },
+            success: function (data) {
+                $('body').html(data);
+            },
+            method: 'POST'
+        });
+    }
+    function UcenikaPopravnogIspita(popravniIspitStavkaId) {
+        console.log("runned!");
+        $.ajax({
+            url: '/PopravniIspit/UcenikaPopravnogIspita',
+            data: {
+                popravniIspitStavkaId: popravniIspitStavkaId
+            },
+            success: function (data) {
+                $('#UcenikaPopravnogIspitaFormParent').html(data);
+            }
+        });
+    }
+
+    function DodajUcenikaForm() {
+        console.log("runned!");
+        $.ajax({
+            url: '/PopravniIspit/DodajUcenikaForm',
+            data: {
+                popravniIspitId: @Model.PopravniIspitId
+            },
+            success: function (data) {
+                $('#UcenikaPopravnogIspitaFormParent').html(data);
+            }
+        });
+    }
+
+
+</script>

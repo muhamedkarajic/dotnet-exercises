@@ -1,0 +1,31 @@
+﻿@using RS1_Ispit_asp.net_core.ViewModels;
+@model OdabirVM;
+
+<form method="get" asp-action="PrikazPopravnihIspita">
+    <table class="table">
+        <tr>
+            <td>Školska godina:</td>
+            <td>
+                <select name="skolskaGodinaId" asp-items="Model.SkolskeGodine"></select>
+            </td>
+        </tr>
+        <tr>
+            <td>Škola: </td>
+            <td>
+                <select name="skolaId" asp-items="Model.Skole"></select>
+            </td>
+        </tr>
+        <tr>
+            <td>Predmet:</td>
+            <td>
+                <select name="predmetId" asp-items="Model.Predmeti"></select>
+            </td>
+        </tr>
+        <tr>
+            <td> </td>
+            <td>
+                <button class="btn btn-primary">Odaberi</button>
+            </td>
+        </tr>
+    </table>
+</form>

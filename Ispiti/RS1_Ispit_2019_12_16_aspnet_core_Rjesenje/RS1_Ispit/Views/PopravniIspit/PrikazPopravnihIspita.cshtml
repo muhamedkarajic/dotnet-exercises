@@ -1,0 +1,159 @@
+﻿@using RS1_Ispit_asp.net_core.ViewModels;
+@model PopravniIspitTabelaVM;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table class="table">
+    <tr>
+        <th>
+            Datum popravnog
+            ispita
+        </th>
+        <th>
+            Nastavnik
+        </th>
+        <th>
+
+            Broj učenika na
+            popravnom
+            ispitu **
+        </th>
+
+        <th>
+            Broj učenika koji su položili
+            popravni ispit (bodovi veći
+            od 50) **
+        </th>
+
+        <th>
+            Akcija
+        </th>
+    </tr>
+
+
+
+    @foreach (var red in Model.PopravniIspitRedVMs)
+    {
+        <tr>
+            <td>
+                @red.DatumIspita.ToString("dd.MM.yyyy")
+            </td>
+            <td>
+                @red.NastavnikImePrezime
+            </td>
+            <td>
+                @red.UceniciNaIspitu
+            </td>
+
+            <td>
+                @red.BrojProlaznosti
+            </td>
+
+            <td>
+                <a class="btn btn-link" asp-action="UrediPopravniIspit" asp-route-popravniIspitId="@red.PopravniIspitId">Uredi</a>
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br />
+<br />
+<br />
+<div>
+    <button onclick="DodajPopravniIspitFormToggle()" class="btn btn-info">Dodaj Popravni Ispit</button>
+</div>
+
+<br />
+<br />
+<br />
+
+<div>
+
+    <form method="post"
+          asp-action="DodajPopravniIspit"
+          asp-route-skolskaGodinaId="@Model.SkolskaGodinaId"
+          asp-route-PredmetId="@Model.PredmetId"
+          asp-route-skolaId="@Model.SkolaId"
+          hidden id="DodajPopravniIspitForm">
+
+        <table class="table">
+            <tr>
+                <td>1. Član komisije:</td>
+                <td>
+                    <select name="nastavnik1Id" asp-items="Model.Nastavnici"></select>
+                </td>
+            </tr>
+            <tr>
+                <td>2. Član komisije: </td>
+                <td>
+                    <select name="nastavnik2Id" asp-items="Model.Nastavnici"></select>
+                </td>
+            </tr>
+            <tr>
+                <td>3. Član komisije: </td>
+                <td>
+                    <select name="nastavnik3Id" asp-items="Model.Nastavnici"></select>
+                </td>
+            </tr>
+            <tr>
+                <td>Datum ispita: </td>
+                <td>
+                    <input name="datum" required type="date" />
+                </td>
+            </tr>
+            <tr>
+                <td>Škola: </td>
+                <td>@Model.SkolaNaziv</td>
+            </tr>
+            <tr>
+                <td>Školska godina: </td>
+                <td>@Model.SkolskaGodinaNaziv</td>
+            </tr>
+            <tr>
+                <td>Predmet: </td>
+                <td>@Model.PredmetNaziv</td>
+            </tr>
+            <tr>
+                <td> </td>
+                <td>
+                    <button class="btn btn-primary">Snimi</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+
+
+
+<script>
+    function DodajPopravniIspitFormToggle() {
+        $('#DodajPopravniIspitForm').toggle('fast');
+    }
+
+</script>

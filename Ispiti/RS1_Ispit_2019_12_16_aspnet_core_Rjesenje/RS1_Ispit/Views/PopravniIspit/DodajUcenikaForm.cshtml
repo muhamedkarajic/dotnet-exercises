@@ -1,0 +1,29 @@
+﻿@using RS1_Ispit_asp.net_core.ViewModels;
+@model DodajUcenikaVM;
+
+@{
+    Layout = null;
+}
+<br />
+<br />
+<form asp-action="DodajUcenikaPopravnomIspitu" asp-route-PopravniIspitId="@Model.PopravniIspitId">
+    <table class="table">
+        <tr>
+            <td>Učenik:</td>
+            <td>
+                <select name="odjeljenjeStavkaId" asp-items="Model.Ucenici"></select>
+            </td>
+        </tr>
+        <tr>
+            <td>Bodovi: </td>
+            <td>
+                <input max="100" min="0" name="bodovi" type="number" class="form-control" />
+            </td>
+        </tr>
+        <tr>
+            <td><button class="btn btn-primary">Snimi</button></td>
+            <td> </td>
+        </tr>
+
+    </table>
+</form>
